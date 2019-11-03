@@ -1,0 +1,2 @@
+{"id":"192.168.99.1.tm157280092447200001","wasCommitted":true,"participants":[{"uri":"192.168.99.1.tm1","state":"COMMITTING","expires":1572800934737,"resourceName":"xa"},{"uri":"192.168.99.1.tm2","state":"COMMITTING","expires":1572800934737,"resourceName":"xads2"}]}
+{"id":"192.168.99.1.tm157280092447200001","wasCommitted":true,"participants":[{"uri":"192.168.99.1.tm1","state":"TERMINATED","expires":1572800934740,"resourceName":"xa"},{"uri":"192.168.99.1.tm2","state":"TERMINATED","expires":1572800934740,"resourceName":"xads2"}]}
