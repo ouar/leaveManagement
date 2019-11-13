@@ -1,47 +1,74 @@
 package com.societe.leavemanagement.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.societe.leavemanagement.dto.CongeDataDTO;
 
 /**
  * The persistent class for the conge database table.
  * 
  */
 @Entity
-@NamedQuery(name="Conge.findAll", query="SELECT c FROM Conge c")
+@NamedQuery(name = "Conge.findAll", query = "SELECT c FROM Conge c")
 public class Conge implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_CONGE")
+	@Column(name = "ID_CONGE")
 	private int idConge;
 
+	@Column(name = "cause")
 	private String cause;
 
+	@Column(name = "DATE_Debut")
 	@Temporal(TemporalType.DATE)
 	private Date dateDebut;
 
+	@Column(name = "DATE_Demande")
 	@Temporal(TemporalType.DATE)
 	private Date dateDmande;
 
+	@Column(name = "DATE_Fin")
 	@Temporal(TemporalType.DATE)
 	private Date dateFin;
 
+	@Column(name = "etat")
 	private String etat;
 
-	private int nombrejour;
+	@Column(name = "nombrejour")
+	private int nombreJour;
 
+	@Column(name = "type")
 	private String type;
 
-	//bi-directional many-to-one association to Collaborateur
+	// bi-directional many-to-one association to Collaborateur
 	@ManyToOne
-	@JoinColumn(name="ID_N")
+	@JoinColumn(name = "ID_COLAB")
 	private Collaborateur collaborateur;
 
 	public Conge() {
 		super();
+	}
+
+	public Conge(CongeDataDTO congeDataDTO) {
+		super();	
+		this.cause = congeDataDTO.getCause();
+		this.dateDebut = congeDataDTO.getDateDebut();
+		this.dateDmande = congeDataDTO.getDateDmande();
+		this.dateFin = congeDataDTO.getDateFin();
+		this.etat = congeDataDTO.getEtat();
+		this.nombreJour = congeDataDTO.getNombreJour();
+		this.type = congeDataDTO.getType();
 	}
 
 	public int getIdConge() {
@@ -117,17 +144,17 @@ public class Conge implements Serializable {
 	}
 
 	/**
-	 * @return the nombrejour
+	 * @return the nombreJour
 	 */
-	public int getNombrejour() {
-		return nombrejour;
+	public int getNombreJour() {
+		return nombreJour;
 	}
 
 	/**
-	 * @param nombrejour the nombrejour to set
+	 * @param nombreJour the nombreJour to set
 	 */
-	public void setNombrejour(int nombrejour) {
-		this.nombrejour = nombrejour;
+	public void setNombreJour(int nombreJour) {
+		this.nombreJour = nombreJour;
 	}
 
 	/**

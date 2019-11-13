@@ -1,164 +1,210 @@
 package com.societe.leavemanagement.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the collaborateur database table.
  * 
  */
 @Entity
-@NamedQuery(name="Collaborateur.findAll", query="SELECT c FROM Collaborateur c")
+@NamedQuery(name = "Collaborateur.findAll", query = "SELECT c FROM Collaborateur c")
+@NamedEntityGraphs(value = {
+		@NamedEntityGraph(name = "Collaborateur.conges", attributeNodes = @NamedAttributeNode("conges")),
+		@NamedEntityGraph(name = "Collaborateur.soldes", attributeNodes = { @NamedAttributeNode("soldes") }) })
 public class Collaborateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_N")
-	private int idN;
+	@Column(name = "ID_COLAB")
+	private int idCollaborateur;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATENAISSANCE_D")
-	private Date datenaissanceD;
+	@Column(name = "DATENAISSANCE")
+	private Date dateNaissance;
 
-	@Column(name="EMAIL_C")
-	private String emailC;
+	@Column(name = "EMAIL")
+	private String email;
 
-	@Column(name="LIEUNAISSANCE_C")
-	private String lieunaissanceC;
+	@Column(name = "LIEUNAISSANCE")
+	private String lieuNaissance;
 
-	@Column(name="NOM_C")
-	private String nomC;
+	@Column(name = "NOM")
+	private String nom;
 
-	@Column(name="PRENOM_C")
-	private String prenomC;
+	@Column(name = "PRENOM")
+	private String prenom;
 
-	@Column(name="TITRE_C")
-	private String titreC;
+	@Column(name = "TITRE")
+	private String titre;
 
-	//bi-directional many-to-one association to Conge
-	@OneToMany(mappedBy="collaborateur")
+	// bi-directional many-to-one association to Conge
+	@OneToMany(mappedBy = "collaborateur")
 	private List<Conge> conges;
 
-	//bi-directional many-to-one association to Solde
-	@OneToMany(mappedBy="collaborateur")
+	// bi-directional many-to-one association to Solde
+	@OneToMany(mappedBy = "collaborateur")
 	private List<Solde> soldes;
 
-	//bi-directional one-to-one association to Utilisateur
+	// bi-directional one-to-one association to Utilisateur
 	@OneToOne
-	@JoinColumn(name="ID_N", referencedColumnName="USR_ID_N")
+	@JoinColumn(name = "USR_ID", referencedColumnName = "USR_ID")
 	private Utilisateur utilisateur;
 
 	public Collaborateur() {
 		super();
 	}
 
-	public int getIdN() {
-		return this.idN;
+	/**
+	 * @return the idCollaborateur
+	 */
+	public int getIdCollaborateur() {
+		return idCollaborateur;
 	}
 
-	public void setIdN(int idN) {
-		this.idN = idN;
+	/**
+	 * @param idCollaborateur the idCollaborateur to set
+	 */
+	public void setIdCollaborateur(int idCollaborateur) {
+		this.idCollaborateur = idCollaborateur;
 	}
 
-	public Date getDatenaissanceD() {
-		return this.datenaissanceD;
+	/**
+	 * @return the dateNaissance
+	 */
+	public Date getDateNaissance() {
+		return dateNaissance;
 	}
 
-	public void setDatenaissanceD(Date datenaissanceD) {
-		this.datenaissanceD = datenaissanceD;
+	/**
+	 * @param dateNaissance the dateNaissance to set
+	 */
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
 	}
 
-	public String getEmailC() {
-		return this.emailC;
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmailC(String emailC) {
-		this.emailC = emailC;
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getLieunaissanceC() {
-		return this.lieunaissanceC;
+	/**
+	 * @return the lieuNaissance
+	 */
+	public String getLieuNaissance() {
+		return lieuNaissance;
 	}
 
-	public void setLieunaissanceC(String lieunaissanceC) {
-		this.lieunaissanceC = lieunaissanceC;
+	/**
+	 * @param lieuNaissance the lieuNaissance to set
+	 */
+	public void setLieuNaissance(String lieuNaissance) {
+		this.lieuNaissance = lieuNaissance;
 	}
 
-	public String getNomC() {
-		return this.nomC;
+	/**
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
 	}
 
-	public void setNomC(String nomC) {
-		this.nomC = nomC;
+	/**
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
-	public String getPrenomC() {
-		return this.prenomC;
+	/**
+	 * @return the prenom
+	 */
+	public String getPrenom() {
+		return prenom;
 	}
 
-	public void setPrenomC(String prenomC) {
-		this.prenomC = prenomC;
+	/**
+	 * @param prenom the prenom to set
+	 */
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 
-	public String getTitreC() {
-		return this.titreC;
+	/**
+	 * @return the titre
+	 */
+	public String getTitre() {
+		return titre;
 	}
 
-	public void setTitreC(String titreC) {
-		this.titreC = titreC;
+	/**
+	 * @param titre the titre to set
+	 */
+	public void setTitre(String titre) {
+		this.titre = titre;
 	}
 
+	/**
+	 * @return the conges
+	 */
 	public List<Conge> getConges() {
-		return this.conges;
+		return conges;
 	}
 
+	/**
+	 * @param conges the conges to set
+	 */
 	public void setConges(List<Conge> conges) {
 		this.conges = conges;
 	}
 
-	public Conge addConge(Conge conge) {
-		getConges().add(conge);
-		conge.setCollaborateur(this);
-
-		return conge;
-	}
-
-	public Conge removeConge(Conge conge) {
-		getConges().remove(conge);
-		conge.setCollaborateur(null);
-
-		return conge;
-	}
-
+	/**
+	 * @return the soldes
+	 */
 	public List<Solde> getSoldes() {
-		return this.soldes;
+		return soldes;
 	}
 
+	/**
+	 * @param soldes the soldes to set
+	 */
 	public void setSoldes(List<Solde> soldes) {
 		this.soldes = soldes;
 	}
 
-	public Solde addSolde(Solde solde) {
-		getSoldes().add(solde);
-		solde.setCollaborateur(this);
-
-		return solde;
-	}
-
-	public Solde removeSolde(Solde solde) {
-		getSoldes().remove(solde);
-		solde.setCollaborateur(null);
-
-		return solde;
-	}
-
+	/**
+	 * @return the utilisateur
+	 */
 	public Utilisateur getUtilisateur() {
-		return this.utilisateur;
+		return utilisateur;
 	}
 
+	/**
+	 * @param utilisateur the utilisateur to set
+	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}

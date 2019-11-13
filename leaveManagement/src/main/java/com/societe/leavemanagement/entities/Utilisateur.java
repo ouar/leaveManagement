@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToOne;
 
 /**
@@ -17,16 +19,20 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
-@NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
+@NamedEntityGraph(name = "Utilisateur.collaborateur", attributeNodes = @NamedAttributeNode("collaborateur"))
 public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "USR_ID_N")
-	private int idN;
+	@Column(name = "USR_ID")
+	private int idUtilisateur;
+	@Column(name = "USR_NAME")
+	private String userName;
+	@Column(name = "USR_PASSWORD")
+	private String password;
 
 	// bi-directional many-to-many association to Role
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "utilisateurrole", joinColumns = {
 			@JoinColumn(name = "RUS_IDUTILISATEUR_N") }, inverseJoinColumns = { @JoinColumn(name = "RUS_IDROLE_N") })
 	private List<Role> roles;
@@ -40,17 +46,17 @@ public class Utilisateur implements Serializable {
 	}
 
 	/**
-	 * @return the idN
+	 * @return the idUtilisateur
 	 */
-	public int getIdN() {
-		return idN;
+	public int getIdUtilisateur() {
+		return idUtilisateur;
 	}
 
 	/**
-	 * @param idN the idN to set
+	 * @param idUtilisateur the idUtilisateur to set
 	 */
-	public void setIdN(int idN) {
-		this.idN = idN;
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
 	}
 
 	/**
@@ -81,4 +87,31 @@ public class Utilisateur implements Serializable {
 		this.collaborateur = collaborateur;
 	}
 
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

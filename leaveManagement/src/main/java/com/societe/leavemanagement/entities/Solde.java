@@ -17,7 +17,7 @@ public class Solde implements Serializable {
 	@Column(name="ID_SOLDE")
 	private int idSolde;
 
-	private int soldeannuel;
+	private int soldeAnnuel;
 
 	//bi-directional many-to-one association to Collaborateur
 	@ManyToOne
@@ -28,28 +28,45 @@ public class Solde implements Serializable {
 		super();
 	}
 
+	/**
+	 * @return the idSolde
+	 */
 	public int getIdSolde() {
-		return this.idSolde;
+		return idSolde;
 	}
 
+	/**
+	 * @param idSolde the idSolde to set
+	 */
 	public void setIdSolde(int idSolde) {
 		this.idSolde = idSolde;
 	}
 
-	public int getSoldeannuel() {
-		return this.soldeannuel;
+	/**
+	 * @return the soldeAnnuel
+	 */
+	public int getSoldeAnnuel() {
+		return soldeAnnuel;
 	}
 
-	public void setSoldeannuel(int soldeannuel) {
-		this.soldeannuel = soldeannuel;
+	/**
+	 * @param soldeAnnuel the soldeAnnuel to set
+	 */
+	public void setSoldeAnnuel(int soldeAnnuel) {
+		this.soldeAnnuel = soldeAnnuel;
 	}
 
+	/**
+	 * @return the collaborateur
+	 */
 	public Collaborateur getCollaborateur() {
-		return this.collaborateur;
+		return collaborateur;
 	}
 
+	/**
+	 * @param collaborateur the collaborateur to set
+	 */
 	public void setCollaborateur(Collaborateur collaborateur) {
 		this.collaborateur = collaborateur;
 	}
-
 }

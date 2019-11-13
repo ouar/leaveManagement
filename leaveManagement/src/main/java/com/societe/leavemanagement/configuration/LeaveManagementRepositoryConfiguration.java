@@ -28,7 +28,7 @@ import com.societe.leavemanagement.repository.LeaveManagementDatasourcePropertie
  * 
  */
 @Configuration
-@PropertySource({ "classpath:leavemanagement.properties" })
+@PropertySource({ "classpath:leaveManagement.properties" })
 @DependsOn("transactionManager")
 @EnableJpaRepositories(basePackages = "com.societe.leavemanagement.repository", entityManagerFactoryRef = "leavemanagementEntityManager", transactionManagerRef = "transactionManager")
 public class LeaveManagementRepositoryConfiguration {
