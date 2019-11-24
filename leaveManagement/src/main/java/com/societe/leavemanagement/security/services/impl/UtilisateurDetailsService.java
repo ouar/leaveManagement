@@ -51,7 +51,7 @@ public class UtilisateurDetailsService implements UserDetailsService {
 		}
 		List<SimpleGrantedAuthority> listAuthority = new ArrayList<>();
 
-		listAuthority.addAll(user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getRoleDescription()))
+		listAuthority.addAll(user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getRoleCode()))
 				.filter(Objects::nonNull).collect(Collectors.toList()));
 
 		return User.withUsername(username).password(user.getPassword()).authorities(listAuthority).accountExpired(false)

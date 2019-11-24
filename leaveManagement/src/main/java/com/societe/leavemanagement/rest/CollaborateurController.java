@@ -20,7 +20,7 @@ import com.societe.leavemanagement.services.LeaveManagementService;
 
 @RestController
 @RequestMapping("/collabs")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class CollaborateurController {
 
 	@Autowired
