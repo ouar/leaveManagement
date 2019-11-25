@@ -17,6 +17,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.societe.leavemanagement.security.JwtTokenUtil;
 import com.societe.leavemanagement.security.exception.CustomException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * Cette classe a les responsabilités suivantes: 1) Recherchez le jeton d'accès
@@ -29,6 +31,7 @@ import com.societe.leavemanagement.security.exception.CustomException;
  *
  */
 @Component
+@Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
 
 	/**
@@ -49,6 +52,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		} catch (CustomException ex) {
+			log.error(ex.getMessage());
 			SecurityContextHolder.clearContext();
 			httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
 			return;

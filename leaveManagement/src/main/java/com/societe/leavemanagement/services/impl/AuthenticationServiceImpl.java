@@ -5,6 +5,7 @@ import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -37,6 +38,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	
+	/**
+	 * 
+	 */
+	@Autowired
+	private JmsTemplate jmsQueueTemplate;
 
 	/**
 	 * {@inheritDoc}
@@ -45,7 +53,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public String signin(String username, String password) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-			return jwtTokenUtil.createToken(username, userRepository.findByUserName(username).getRoles());
+			String token = jwtTokenUtil.createToken(username, userRepository.findByUserName(username).getRoles());
+			jmsQueueTemplate.convertAndSend("activemq/queue/TestInQueue", "Authentification de l'utilisateur" + username);
+			return token;
 		} catch (AuthenticationException e) {
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
