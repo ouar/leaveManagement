@@ -30,12 +30,7 @@ public class UtilisateurController {
 	@PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)	
 	public UserDataDTO login(@RequestBody UserDataDTO user) {
 		try {
-			String token = authenticationService.signin(user.getUserName(), user.getPassword());
-			UserDataDTO userResponse = new UserDataDTO();
-			userResponse.setUserName(user.getUserName());
-			userResponse.setToken(token);
-			return userResponse;
-
+			return authenticationService.signin(user.getUserName(), user.getPassword());
 		} catch (CustomException e) {
 			throw e;
 		} catch (Exception e) {

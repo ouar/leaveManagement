@@ -2,6 +2,9 @@ package com.societe.leavemanagement.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 /**
@@ -25,6 +28,7 @@ public class Role implements Serializable {
 
 	// bi-directional many-to-many association to Utilisateur
 	@ManyToMany(mappedBy = "roles")
+	@JsonIgnore
 	private List<Utilisateur> utilisateurs;
 
 	public Role() {

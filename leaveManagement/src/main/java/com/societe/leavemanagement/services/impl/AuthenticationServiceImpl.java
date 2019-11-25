@@ -1,5 +1,7 @@
 package com.societe.leavemanagement.services.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
@@ -12,6 +14,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.societe.leavemanagement.dto.UserDataDTO;
+import com.societe.leavemanagement.entities.Role;
 import com.societe.leavemanagement.entities.Utilisateur;
 import com.societe.leavemanagement.repository.UserRepository;
 import com.societe.leavemanagement.security.JwtTokenUtil;
@@ -50,12 +54,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String signin(String username, String password) {
+	public UserDataDTO signin(String username, String password) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			List<Role> listRoles = userRepository.findByUserName(username).getRoles();
 			String token = jwtTokenUtil.createToken(username, userRepository.findByUserName(username).getRoles());
 			jmsQueueTemplate.convertAndSend("activemq/queue/TestInQueue", "Authentification de l'utilisateur" + username);
-			return token;
+			UserDataDTO userResponse = new UserDataDTO();
+			userResponse.setUserName(username);
+			userResponse.setToken(token);
+			userResponse.setRoles(listRoles);
+			return userResponse;
 		} catch (AuthenticationException e) {
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
 		}

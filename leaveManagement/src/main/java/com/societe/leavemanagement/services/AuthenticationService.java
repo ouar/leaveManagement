@@ -1,5 +1,6 @@
 package com.societe.leavemanagement.services;
 
+import com.societe.leavemanagement.dto.UserDataDTO;
 import com.societe.leavemanagement.entities.Utilisateur;
 
 /**
@@ -14,7 +15,7 @@ public interface AuthenticationService {
 	 * @param password
 	 * @return
 	 */
-	String signin(String username, String password);
+	UserDataDTO signin(String username, String password);
 
 	/**
 	 * 

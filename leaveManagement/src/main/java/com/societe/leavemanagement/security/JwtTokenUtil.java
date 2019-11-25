@@ -100,7 +100,7 @@ public class JwtTokenUtil {
 			// Prepare JWT with claims set
 			JWTClaimsSet claimsSet = new JWTClaimsSet.Builder().subject(username).expirationTime(validity)
 					.claim("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getRoleCode()))
-							.filter(Objects::nonNull).collect(Collectors.toList()))
+							.filter(Objects::nonNull).collect(Collectors.toList()).toString())
 					.build();
 
 			RSASSASigner signer = new RSASSASigner(privateKey);
