@@ -4,7 +4,6 @@ import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +27,7 @@ import com.atomikos.icatch.jta.UserTransactionManager;
 @Configuration
 @ComponentScan
 @EnableTransactionManagement
-public class MainConfig {
+public class LeaveManagementTransactionManagementConfig {
 
 	/**
 	 * 
@@ -87,14 +86,4 @@ public class MainConfig {
 		TransactionManager atomikosTransactionManager = atomikosTransactionManager();
 		return new JtaTransactionManager(userTransaction, atomikosTransactionManager);
 	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,6 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -30,6 +34,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(exclude = {"conges", "soldes", "utilisateur"})
+@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @NamedQuery(name = "Collaborateur.findAll", query = "SELECT c FROM Collaborateur c")
 @NamedEntityGraphs(value = {
@@ -40,26 +46,32 @@ public class Collaborateur implements Serializable {
 
 	@Id
 	@Column(name = "ID_COLAB")
-	private int idCollaborateur;
-
+	@NonNull
+	private Integer idCollaborateur;
 	
 	@Column(name = "DATENAISSANCE", columnDefinition = "DATE")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NonNull
 	private LocalDate dateNaissance;
 
 	@Column(name = "EMAIL")
+	@NonNull
 	private String email;
 
 	@Column(name = "LIEUNAISSANCE")
+	@NonNull
 	private String lieuNaissance;
 
 	@Column(name = "NOM")
+	@NonNull
 	private String nom;
 
 	@Column(name = "PRENOM")
+	@NonNull
 	private String prenom;
 
 	@Column(name = "TITRE")
+	@NonNull
 	private String titre;
 
 	// bi-directional many-to-one association to Conge
@@ -73,7 +85,7 @@ public class Collaborateur implements Serializable {
 	private List<Solde> soldes;
 
 	// bi-directional one-to-one association to Utilisateur
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "USR_ID", referencedColumnName = "USR_ID")
 	@JsonIgnore
 	private Utilisateur utilisateur;
