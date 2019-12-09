@@ -2,8 +2,6 @@ package com.societe.leavemanagement.services.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.societe.leavemanagement.dto.UserDTO;
 import com.societe.leavemanagement.entities.Role;
@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-@Transactional(value = TxType.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Autowired

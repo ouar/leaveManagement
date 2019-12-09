@@ -2,11 +2,10 @@ package com.societe.leavemanagement.services.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.societe.leavemanagement.entities.Collaborateur;
 import com.societe.leavemanagement.repository.CollaborateurRepository;
@@ -18,7 +17,7 @@ import com.societe.leavemanagement.services.CollaborateurService;
  *
  */
 @Service
-@Transactional(value = TxType.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class CollaborateurServiceImpl implements CollaborateurService {
 
 	/**
