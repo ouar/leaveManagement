@@ -2,7 +2,7 @@ package com.societe.leavemanagement.services;
 
 import java.util.List;
 
-import com.societe.leavemanagement.dto.CongeDataDTO;
+import com.societe.leavemanagement.dto.CongeDTO;
 import com.societe.leavemanagement.entities.Conge;
 
 public interface CongeService {
@@ -13,13 +13,13 @@ public interface CongeService {
 	 * @param userName
 	 * @return
 	 */
-	List<CongeDataDTO> getListCongesCollaborateur(String userName);
+	List<CongeDTO> getListCongesCollaborateur(String userName);
 	/**
 	 * 
 	 * @param idConge
 	 * @param congeDto
 	 */
-	void updateCongeCollaborateur(int idConge, CongeDataDTO congeDto, String userName);
+	void updateCongeCollaborateur(int idConge, CongeDTO congeDto, String userName);
 	/**
 	 * 
 	 * @param conge

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.societe.leavemanagement.dto.CollaborateurDataDTO;
+import com.societe.leavemanagement.dto.CollaborateurDTO;
 import com.societe.leavemanagement.entities.Collaborateur;
 import com.societe.leavemanagement.security.exception.CustomException;
 import com.societe.leavemanagement.services.CollaborateurService;
@@ -46,7 +46,7 @@ public class CollaborateurController {
 	}
 
 	@PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<Collaborateur> createCollaborateur(@RequestBody CollaborateurDataDTO collaborateurDataDTO) {
+	public List<Collaborateur> createCollaborateur(@RequestBody CollaborateurDTO collaborateurDataDTO) {
 		try {
 			collaborateurService.storeCollaborateur(modelMapper.map(collaborateurDataDTO, Collaborateur.class));
 			return collaborateurService.getListCollaborateurs();

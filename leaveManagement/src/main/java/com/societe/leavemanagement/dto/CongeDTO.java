@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CongeDataDTO implements Serializable {
+public class CongeDTO implements Serializable {
 
 	/**
 	 * 

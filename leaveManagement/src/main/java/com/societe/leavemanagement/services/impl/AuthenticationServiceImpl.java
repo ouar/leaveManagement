@@ -14,7 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.societe.leavemanagement.dto.UserDataDTO;
+import com.societe.leavemanagement.dto.UserDTO;
 import com.societe.leavemanagement.entities.Role;
 import com.societe.leavemanagement.entities.Utilisateur;
 import com.societe.leavemanagement.repository.UserRepository;
@@ -56,14 +56,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserDataDTO signin(String username, String password) {
+	public UserDTO signin(String username, String password) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			Utilisateur authentifiedUser = userRepository.findByUserName(username);
 			List<Role> listRoles = authentifiedUser.getRoles();
 			String token = jwtTokenUtil.createToken(username, listRoles);
 			
-			UserDataDTO userResponse = new UserDataDTO();
+			UserDTO userResponse = new UserDTO();
 			userResponse.setUserName(username);
 			userResponse.setName(authentifiedUser.getCollaborateur().getNom());
 			userResponse.setToken(token);

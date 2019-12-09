@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.societe.leavemanagement.dto.UserDataDTO;
+import com.societe.leavemanagement.dto.UserDTO;
 import com.societe.leavemanagement.entities.Utilisateur;
 import com.societe.leavemanagement.security.exception.CustomException;
 import com.societe.leavemanagement.services.AuthenticationService;
@@ -29,7 +29,7 @@ public class UtilisateurController {
 	private ModelMapper modelMapper;
 
 	@PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UserDataDTO login(@RequestBody UserDataDTO user) {
+	public UserDTO login(@RequestBody UserDTO user) {
 		try {
 			return authenticationService.signin(user.getUserName(), user.getPassword());
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class UtilisateurController {
 
 	@PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String signup(@RequestBody UserDataDTO user) {
+	public String signup(@RequestBody UserDTO user) {
 		return authenticationService.signup(modelMapper.map(user, Utilisateur.class));
 	}
 

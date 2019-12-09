@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.societe.leavemanagement.dto.CongeDataDTO;
+import com.societe.leavemanagement.dto.CongeDTO;
 import com.societe.leavemanagement.entities.Conge;
 import com.societe.leavemanagement.security.exception.CustomException;
 import com.societe.leavemanagement.services.CongeService;
@@ -42,10 +42,10 @@ public class CongeController {
 	private ModelMapper modelMapper;
 
 	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<CongeDataDTO>> getListCongesCollaborateur(
+	public ResponseEntity<List<CongeDTO>> getListCongesCollaborateur(
 			@AuthenticationPrincipal UserDetails userDetails) {
 		try {
-			List<CongeDataDTO> conges = congeService.getListCongesCollaborateur(userDetails.getUsername());
+			List<CongeDTO> conges = congeService.getListCongesCollaborateur(userDetails.getUsername());
 			return ResponseEntity.ok(conges);
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -55,7 +55,7 @@ public class CongeController {
 	}
 
 	@PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<CongeDataDTO>> addConge(@RequestBody CongeDataDTO congeDataDTO,
+	public ResponseEntity<List<CongeDTO>> addConge(@RequestBody CongeDTO congeDataDTO,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		try {		
 			congeDataDTO.setEtat("C");	
@@ -71,7 +71,7 @@ public class CongeController {
 
 	}
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<CongeDataDTO>> deleteConge(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+	public ResponseEntity<List<CongeDTO>> deleteConge(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
 		try {
 			congeService.deleteCongeCollaborateur(id, userDetails.getUsername());
 			return ResponseEntity.ok(congeService.getListCongesCollaborateur(userDetails.getUsername()));
@@ -83,7 +83,7 @@ public class CongeController {
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<CongeDataDTO>> updateConge(@PathVariable int id,@RequestBody CongeDataDTO congeDataDTO, @AuthenticationPrincipal UserDetails userDetails) {
+	public ResponseEntity<List<CongeDTO>> updateConge(@PathVariable int id,@RequestBody CongeDTO congeDataDTO, @AuthenticationPrincipal UserDetails userDetails) {
 		try {
 			congeService.updateCongeCollaborateur(id, congeDataDTO, userDetails.getUsername());
 			return ResponseEntity.ok(congeService.getListCongesCollaborateur(userDetails.getUsername()));

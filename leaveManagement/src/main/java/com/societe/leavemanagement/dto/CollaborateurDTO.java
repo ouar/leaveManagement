@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CollaborateurDataDTO implements Serializable {
+public class CollaborateurDTO implements Serializable {
 
 	/**
 	 * 

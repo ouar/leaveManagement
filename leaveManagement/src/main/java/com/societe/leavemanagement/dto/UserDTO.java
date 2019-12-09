@@ -17,7 +17,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserDataDTO implements Serializable {
+public class UserDTO implements Serializable {
 
 	/**
 	 * 

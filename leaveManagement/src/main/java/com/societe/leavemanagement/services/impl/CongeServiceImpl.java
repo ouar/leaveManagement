@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.societe.leavemanagement.dto.CongeDataDTO;
+import com.societe.leavemanagement.dto.CongeDTO;
 import com.societe.leavemanagement.entities.Collaborateur;
 import com.societe.leavemanagement.entities.Conge;
 import com.societe.leavemanagement.entities.Utilisateur;
@@ -52,14 +52,14 @@ public class CongeServiceImpl implements CongeService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<CongeDataDTO> getListCongesCollaborateur(String userName) {
-		List<CongeDataDTO> conges = null;
+	public List<CongeDTO> getListCongesCollaborateur(String userName) {
+		List<CongeDTO> conges = null;
 		Collaborateur authentifiedCollaborateur = getCollaborateurByUserName(userName);
 
 		if (authentifiedCollaborateur != null) {
 			conges = new ArrayList<>();
 			conges.addAll(authentifiedCollaborateur.getConges().stream()
-					.map(conge -> new CongeDataDTO(conge.getIdConge(), conge.getCause(), conge.getDateDebut(),
+					.map(conge -> new CongeDTO(conge.getIdConge(), conge.getCause(), conge.getDateDebut(),
 							conge.getDateDemande(), conge.getDateFin(), conge.getEtat(), conge.getNombreJour()))
 					.filter(Objects::nonNull).collect(Collectors.toList()));
 		}
@@ -88,7 +88,7 @@ public class CongeServiceImpl implements CongeService {
 	}
 
 	@Override
-	public void updateCongeCollaborateur(int idConge, CongeDataDTO congeDto, String userName) {
+	public void updateCongeCollaborateur(int idConge, CongeDTO congeDto, String userName) {
 		if (isLeavePartOfCurrentUserLeaveList(idConge, userName)) {
 			Conge optionalConge = congeRepository.findById(idConge).orElse(null);
 			if (optionalConge !=null) {
