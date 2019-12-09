@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +73,7 @@ public class CongeServiceImpl implements CongeService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void storeCongeCollaborateur(Conge conge, String userName) {		
+	public void storeCongeCollaborateur(Conge conge, String userName) {
 		Collaborateur authentifiedCollaborateur = getCollaborateurByUserName(userName);
 		if (authentifiedCollaborateur != null) {
 			conge.setCollaborateur(authentifiedCollaborateur);
@@ -91,11 +92,11 @@ public class CongeServiceImpl implements CongeService {
 	public void updateCongeCollaborateur(int idConge, CongeDTO congeDto, String userName) {
 		if (isLeavePartOfCurrentUserLeaveList(idConge, userName)) {
 			Conge optionalConge = congeRepository.findById(idConge).orElse(null);
-			if (optionalConge !=null) {
+			if (optionalConge != null) {
 				optionalConge.setDateDebut(congeDto.getDateDebut());
 				optionalConge.setDateFin(congeDto.getDateFin());
 				optionalConge.setEtat(congeDto.getEtat());
-				optionalConge.setCause(congeDto.getCause());	
+				optionalConge.setCause(congeDto.getCause());
 				log.info(optionalConge.toString());
 
 			}
