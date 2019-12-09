@@ -1,7 +1,7 @@
 package com.societe.leavemanagement.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,8 +14,6 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,10 +42,10 @@ public class Collaborateur implements Serializable {
 	@Column(name = "ID_COLAB")
 	private int idCollaborateur;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATENAISSANCE")
+	
+	@Column(name = "DATENAISSANCE", columnDefinition = "DATE")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dateNaissance;
+	private LocalDate dateNaissance;
 
 	@Column(name = "EMAIL")
 	private String email;

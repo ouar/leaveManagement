@@ -1,7 +1,7 @@
 package com.societe.leavemanagement.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,7 +22,7 @@ public class CollaborateurDataDTO implements Serializable {
 	 * 
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dateNaissance;
+	private LocalDate dateNaissance;
 	/**
 	 * 
 	 */
