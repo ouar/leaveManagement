@@ -5,12 +5,19 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
 /**
  * The persistent class for the role database table.
  * 
  */
+@Getter
+@Setter
+@ToString
 @Entity
 @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
 public class Role implements Serializable {
@@ -31,63 +38,4 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private List<Utilisateur> utilisateurs;
 
-	public Role() {
-		super();
-	}
-
-	/**
-	 * @return the idRole
-	 */
-	public int getIdRole() {
-		return idRole;
-	}
-
-	/**
-	 * @param idRole the idRole to set
-	 */
-	public void setIdRole(int idRole) {
-		this.idRole = idRole;
-	}
-
-	/**
-	 * @return the roleCode
-	 */
-	public String getRoleCode() {
-		return roleCode;
-	}
-
-	/**
-	 * @param roleCode the roleCode to set
-	 */
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
-	}
-
-	/**
-	 * @return the roleDescription
-	 */
-	public String getRoleDescription() {
-		return roleDescription;
-	}
-
-	/**
-	 * @param roleDescription the roleDescription to set
-	 */
-	public void setRoleDescription(String roleDescription) {
-		this.roleDescription = roleDescription;
-	}
-
-	/**
-	 * @return the utilisateurs
-	 */
-	public List<Utilisateur> getUtilisateurs() {
-		return utilisateurs;
-	}
-
-	/**
-	 * @param utilisateurs the utilisateurs to set
-	 */
-	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-	}
 }

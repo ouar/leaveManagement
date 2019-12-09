@@ -22,17 +22,21 @@ import com.societe.leavemanagement.security.JwtTokenUtil;
 import com.societe.leavemanagement.security.exception.CustomException;
 import com.societe.leavemanagement.services.AuthenticationService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author salah
  *
  */
 @Service
+@Slf4j
 @Transactional(value = TxType.REQUIRES_NEW)
 public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -42,8 +46,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
-	
 	/**
 	 * 
 	 */
@@ -57,15 +59,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public UserDataDTO signin(String username, String password) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-			List<Role> listRoles = userRepository.findByUserName(username).getRoles();
-			String token = jwtTokenUtil.createToken(username, userRepository.findByUserName(username).getRoles());
-			jmsQueueTemplate.convertAndSend("activemq/queue/TestInQueue", "Authentification de l'utilisateur" + username);
+			Utilisateur authentifiedUser = userRepository.findByUserName(username);
+			List<Role> listRoles = authentifiedUser.getRoles();
+			String token = jwtTokenUtil.createToken(username, listRoles);
+			
 			UserDataDTO userResponse = new UserDataDTO();
 			userResponse.setUserName(username);
+			userResponse.setName(authentifiedUser.getCollaborateur().getNom());
 			userResponse.setToken(token);
 			userResponse.setRoles(listRoles);
 			return userResponse;
 		} catch (AuthenticationException e) {
+			log.error(e.getMessage());
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
@@ -78,8 +83,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if (!userRepository.existsByUserName(user.getUserName())) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			userRepository.save(user);
+			jmsQueueTemplate.convertAndSend("activemq/queue/TestInQueue", "Création de l'utilisateur" + user.getUserName());
 			return jwtTokenUtil.createToken(user.getUserName(), user.getRoles());
 		} else {
+			log.error("Username is already in use");
 			throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}

@@ -2,6 +2,7 @@ package com.societe.leavemanagement.repository;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.societe.leavemanagement.entities.Utilisateur;
 
@@ -10,6 +11,7 @@ import com.societe.leavemanagement.entities.Utilisateur;
  * @author salah
  *
  */
+@Repository
 public interface UserRepository extends JpaRepository<Utilisateur, Integer> {
 
 	/**

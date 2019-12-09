@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.sql.DataSource;
 
 import org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatform;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,33 +34,14 @@ import com.societe.leavemanagement.repository.LeaveManagementDatasourcePropertie
 @EnableJpaRepositories(basePackages = "com.societe.leavemanagement.repository", entityManagerFactoryRef = "leavemanagementEntityManager", transactionManagerRef = "transactionManager")
 public class LeaveManagementRepositoryConfiguration {
 
-	/*
-	 * 
-	 */
-	private JpaVendorAdapter jpaVendorAdapter;
-	/*
-	 * 
-	 */
-	private LeaveManagementDatasourceProperties leavemanagementDatasourceProperties;
-
 	/**
 	 * 
-	 * @param jpaVendorAdapter
 	 * @param leavemanagementDatasourceProperties
-	 */
-	public LeaveManagementRepositoryConfiguration(JpaVendorAdapter jpaVendorAdapter, LeaveManagementDatasourceProperties leavemanagementDatasourceProperties) {
-		super();
-		this.jpaVendorAdapter = jpaVendorAdapter;
-		this.leavemanagementDatasourceProperties = leavemanagementDatasourceProperties;
-	}
-
-	/**
-	 * 
 	 * @return
 	 * @throws SQLException
 	 */
 	@Bean(name = "leavemanagementDataSource", initMethod = "init", destroyMethod = "close")
-	public DataSource orderDataSource() throws SQLException {
+	public DataSource orderDataSource(@Autowired LeaveManagementDatasourceProperties leavemanagementDatasourceProperties) throws SQLException {
 		MysqlXADataSource mysqlXaDataSource = new MysqlXADataSource();
 		mysqlXaDataSource.setUrl(leavemanagementDatasourceProperties.getUrl());
 		mysqlXaDataSource.setPinGlobalTxToPhysicalConnection(true);
@@ -79,9 +61,9 @@ public class LeaveManagementRepositoryConfiguration {
 	 * @return
 	 */
 	@Bean(name = "leavemanagementEntityManager")
-	public LocalContainerEntityManagerFactoryBean orderEntityManager(@Qualifier("leavemanagementDataSource") DataSource dataSource) {
+	public LocalContainerEntityManagerFactoryBean orderEntityManager(@Qualifier("leavemanagementDataSource") DataSource dataSource, @Autowired JpaVendorAdapter jpaVendorAdapter) {
 
-		HashMap<String, String> properties = new HashMap<String, String>();
+		HashMap<String, String> properties = new HashMap<>();
 		properties.put("hibernate.transaction.jta.platform", AtomikosJtaPlatform.class.getName());
 		properties.put("javax.persistence.transactionType", "JTA");
 

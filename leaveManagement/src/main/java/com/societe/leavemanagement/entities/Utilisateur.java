@@ -14,10 +14,17 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * The persistent class for the utilisateur database table.
  * 
  */
+@Getter
+@Setter
+@ToString
 @Entity
 @NamedEntityGraph(name = "Utilisateur.collaborateur", attributeNodes = @NamedAttributeNode("collaborateur"))
 public class Utilisateur implements Serializable {
@@ -40,78 +47,5 @@ public class Utilisateur implements Serializable {
 	// bi-directional one-to-one association to Collaborateur
 	@OneToOne(mappedBy = "utilisateur")
 	private Collaborateur collaborateur;
-
-	public Utilisateur() {
-		super();
-	}
-
-	/**
-	 * @return the idUtilisateur
-	 */
-	public int getIdUtilisateur() {
-		return idUtilisateur;
-	}
-
-	/**
-	 * @param idUtilisateur the idUtilisateur to set
-	 */
-	public void setIdUtilisateur(int idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
-	}
-
-	/**
-	 * @return the roles
-	 */
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	/**
-	 * @return the collaborateur
-	 */
-	public Collaborateur getCollaborateur() {
-		return collaborateur;
-	}
-
-	/**
-	 * @param collaborateur the collaborateur to set
-	 */
-	public void setCollaborateur(Collaborateur collaborateur) {
-		this.collaborateur = collaborateur;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
-	}
-
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	
 }
