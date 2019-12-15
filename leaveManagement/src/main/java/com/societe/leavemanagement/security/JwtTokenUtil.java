@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,10 +46,11 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Component
+@PropertySource({ "classpath:leavemanagement.properties" })
 @Slf4j
 public class JwtTokenUtil {
 
-	@Value("${security.jwt.token.secret-key:secret-key}")
+	@Value("${security.jwt.token.secret-key}")
 	private String passwordCertificat;
 
 	@Value("${security.jwt.token.expire-length:3600000}")

@@ -33,7 +33,7 @@ import com.societe.leavemanagement.repository.LeaveManagementDatasourcePropertie
 @Configuration
 @DependsOn("transactionManager")
 @EnableJpaRepositories(basePackages = "com.societe.leavemanagement.repository", entityManagerFactoryRef = "leavemanagementEntityManager", transactionManagerRef = "transactionManager")
-public class LeaveManagementRepositoryConfiguration {
+public class LeaveManagementRepositoryConfig {
 	
 	/**
 	 * 

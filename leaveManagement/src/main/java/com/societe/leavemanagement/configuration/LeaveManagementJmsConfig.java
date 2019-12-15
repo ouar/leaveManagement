@@ -21,7 +21,7 @@ import com.atomikos.jms.AtomikosConnectionFactoryBean;
 @Configuration
 @DependsOn("transactionManager")
 @EnableJms
-public class LeaveManagementJmsConfiguration {
+public class LeaveManagementJmsConfig {
 
 	@Value("${jms.broker-url}")
 	private String jmsBrokerUrl;

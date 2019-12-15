@@ -27,7 +27,7 @@ import com.atomikos.icatch.jta.UserTransactionManager;
 @Configuration
 @ComponentScan
 @EnableTransactionManagement
-public class LeaveManagementTransactionManagementConfig {
+public class LeaveManagementTransactionConfig {
 
 	/**
 	 * 
